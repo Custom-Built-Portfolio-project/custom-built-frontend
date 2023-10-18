@@ -1,6 +1,7 @@
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
 import NavBar from './components/navBar/navBar'
+import Contacto from './components/navBar/Contacto/Contacto'
 import Landing from './components/Landing/landing'
 
 function App() {
@@ -15,8 +16,8 @@ function App() {
           {
             // <Route path="/Productos" element={<Productos />} />
             // <Route path="/Servicios" element={<Servicios />} 
-            //<Route path="/Contacto" element={<Contacto />} />
           }
+          <Route path="/Contacto" element={<Contacto />} />
 
 
 
