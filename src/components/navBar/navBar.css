@@ -1,25 +1,53 @@
-/* App.css */
 .navBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     background-color: #333;
+    color: #fff;
     display: flex;
-    justify-content: space-around; 
+    justify-content: space-between;
     align-items: center;
-  }
-  
-  .navBar-title {
-    color: #fff;
-    font-size: 24px;
-  }
-  
-  .navBar-menu {
-    list-style: none;
-    padding: 0;
+    padding: 10px 20px;
+    z-index: 999;
+}
+
+.navBar-title {
     display: flex;
-    gap: 20px;
-  }
-  
-  .navBar-item {
+    align-items: center;
+}
+
+/* Estilo para los elementos 'select' */
+.navBar-title select {
+    border: none;
+    background-color: transparent;
     color: #fff;
-    font-size: 18px;
-  }
-  
+    appearance: none;
+    margin-right: 10px;
+}
+
+/* Estilo para los grupos de opciones 'optgroup' */
+.navBar-title optgroup {
+    color: #000; /* Color de texto para los grupos */
+}
+
+.navBar-menu {
+    list-style: none;
+    display: flex;
+    margin-right: 20px;
+}
+
+.navBar-item {
+    margin-right: 12px;
+    font-size: 16px;
+}
+
+.navBar-item:last-child {
+    margin-right: 20px;
+}
+
+.navBar-item a {
+    color: #fff;
+    text-decoration: none;
+}
+
