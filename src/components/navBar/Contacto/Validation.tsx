@@ -1,5 +1,12 @@
+
+
 export interface CountryDigitsMap {
   [key: string]: number;
+}
+
+export interface ValidationResult {
+  error: string | undefined;
+  allowedDigits: number;
 }
 
 export const allowedDigitsByCountry: CountryDigitsMap = {
@@ -19,25 +26,25 @@ export const allowedDigitsByCountry: CountryDigitsMap = {
 export const validateName = (name: string): string | undefined => {
   const nameRegex = /^[A-Z][a-zA-Z0-9]*$/;
   if (!name.match(nameRegex)) {
-    return 'El nombre debe comenzar con mayúscula y contener solo letras y números.';
+    return 'El nombre debe comenzar con mayuscula, letras y números.';
+  } else if (name.length > 50) {
+    return 'El mensaje debe tener al menos 20 caracteres.';
   }
   return undefined;
 };
 
-export const validatePhone = (phone: string, countryCode: string): string | undefined => {
-  // Obtiene la cantidad de dígitos permitidos para el país seleccionado
-  const allowedDigits = allowedDigitsByCountry[countryCode];
+export const validatePhone = (phone: string, countryCode: string): ValidationResult => {
+  const allowedDigits = allowedDigitsByCountry[countryCode] || 0;
+  const phoneDigits = phone.replace(/\D/g, ''); // Elimina los caracteres no numéricos
 
-  // Expresión regular que valida un código de área de 2 o 3 dígitos seguido de un número de teléfono con la cantidad permitida de dígitos
-  const phoneRegex = new RegExp(`^[2-9]{1}[0-9]{1}\\s\\d{${allowedDigits}}$`);
-
-  if (!phone.match(phoneRegex)) {
-    return 'Número de teléfono no válido.';
+  if (phoneDigits.length !== allowedDigits) {
+    const remainingDigits = allowedDigits - phoneDigits.length;
+    const errorMessage = `Faltan ${remainingDigits} dígitos en el número de teléfono.`;
+    return { error: errorMessage, allowedDigits };
   }
-  return undefined;
+
+  return { error: undefined, allowedDigits };
 };
-
-
 
 export const validateEmail = (email: string): string | undefined => {
   // Expresión regular para validar una dirección de correo electrónico

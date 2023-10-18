@@ -35,23 +35,24 @@ const Contacto: React.FC = () => {
 
     if (name === 'phoneCode') {
       // Manejar cambios en el código de área
-      setFormData({ ...formData, phoneCode: value });
-  
-      // Actualizar el número de teléfono incluyendo el código de área
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value,
+      phone: value === '+1' ? '' : prevState.phone,
+    }));
+    } else if (name === 'phone') {
+      const phoneValidationResult = validatePhone(`${formData.phoneCode} ${value}`, formData.phoneCode);
+      error = phoneValidationResult.error;
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        [name]: error || '',
+      }));
       setFormData(prevState => ({
         ...prevState,
-        phone: `${value} ${prevState.phone.split(' ')[1] || ''}` 
+        [name]: value,
       }));
-    } else if (name === 'phone') {
-      // Manejar cambios en el número de teléfono
-      setFormData({ ...formData, phone: value });
-  
-      // Actualizar el número de teléfono incluyendo el código de área
-      setFormData(prevState => ({ ...prevState, phone: `${formData.phoneCode} ${value}` }));
-  
-      // Validar el número de teléfono completo
-      error = validatePhone(`${formData.phoneCode} ${value}`, formData.phoneCode);
     } else {
+      // Validar otros campos como 'username', 'email' y 'message'
       switch (name) {
         case 'username':
           error = validateName(value);
@@ -65,10 +66,17 @@ const Contacto: React.FC = () => {
         default:
           break;
       }
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        [name]: error || '',
+      }));
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: value,
+      }));
     }
 
-    setErrors({ ...errors, [name]: error || '' });
-    setFormData({ ...formData, [name]: value });
+   
   };
 
 
@@ -79,20 +87,20 @@ const Contacto: React.FC = () => {
        // Obtén el código de país del objeto formData
        const countryCode = formData.phoneCode;
 
-    const nameError = validateName(formData.username);
-    const phoneError = validatePhone(`${formData.phoneCode} ${formData.phone}`, countryCode);
-    const emailError = validateEmail(formData.email);
-    const messageError = validateMessage(formData.message);
-
-    setErrors({
-      username: nameError || '',
-      phone: phoneError || '',
-      email: emailError || '',
-      message: messageError || '',
-    });
+       const nameError = validateName(formData.username);
+       const phoneError = validatePhone(`${formData.phoneCode} ${formData.phone}`, countryCode);
+       const emailError = validateEmail(formData.email);
+       const messageError = validateMessage(formData.message);
+     
+       setErrors({
+         username: nameError || '',
+         phone: phoneError.error || '',
+         email: emailError || '',
+         message: messageError || '',
+       });
 
     // Verifica si no hay errores
-    if (!nameError && !phoneError && !emailError && !messageError) {
+    if (!nameError && !phoneError.error && !emailError && !messageError) {
       // Condición adicional: No hay errores, puedes manejar el envío del formulario aquí
       console.log(formData);
     } else {
