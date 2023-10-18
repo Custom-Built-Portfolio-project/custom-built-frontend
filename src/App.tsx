@@ -4,7 +4,7 @@ import NavBar from './components/navBar/navBar'
 import Landing from './components/Landing/landing'
 
 function App() {
-  const menuItems: string[] = ['Productos', 'Serivios', 'Contacto', 'Foro', 'Acceso', "Registro"]
+  const menuItems: string[] = ['Productos', 'Servicios', 'Contacto', 'Foro', 'Acceso', "Registro"]
 
   return (
     <>
