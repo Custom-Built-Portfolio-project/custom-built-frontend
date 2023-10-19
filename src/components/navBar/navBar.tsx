@@ -29,7 +29,10 @@ const NavBar: React.FC<NavBarProps> = ({ title, items }) => {
                         {
                             title: 'Todos los Productos',
                             items: [
-                                { text: 'Componentes de Almacenamiento', path: '/almacenamiento' },
+                                { text: 'Componentes y Almacenamiento', path: '/componentes-almacenamiento', submenu: [ 
+                                    { text: 'Componente 1', path: '/componente-1' },
+                                    { text: 'Componente 2', path: '/componente-2' } ]
+                                },
                                 { text: 'Sistemas informáticos', path: '/sistemas' },
                                 { text: 'Periféricos de PC', path: '/perifericos' },
                                 { text: 'Servidores y Redes', path: '/redes' },
@@ -47,7 +50,7 @@ const NavBar: React.FC<NavBarProps> = ({ title, items }) => {
             <ul className='navBar-menu'>
                 {items.map((item, index) => (
                     <li key={index} className='navBar-item'>
-                        <Link to={`/${item}`} target='_blank'>
+                        <Link to={`/${item.toLowerCase()}`} target='_blank'>
                             {item}
                         </Link>
                     </li>
