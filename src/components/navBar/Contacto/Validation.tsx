@@ -18,7 +18,24 @@ export const allowedDigitsByCountry: CountryDigitsMap = {
   '58': 10, // Venezuela tiene 10 dígitos (incluyendo el código de área)
   '51': 9,  // Perú tiene 9 dígitos (incluyendo el código de área)
   '34': 9,  // España tiene 9 dígitos (incluyendo el código de área)
-  '1': 10   // Estados Unidos y Canadá tienen 10 dígitos (incluyendo el código de área)
+  '1': 10,  // Estados Unidos y Canadá tienen 10 dígitos (incluyendo el código de área)
+  '49': 10, // Alemania tiene 10 dígitos (incluyendo el código de área)
+  '33': 9,  // Francia tiene 9 dígitos (incluyendo el código de área)
+  '44': 10, // Reino Unido tiene 10 dígitos (incluyendo el código de área)
+  '39': 10, // Italia tiene 10 dígitos (incluyendo el código de área)
+  '1C': 10,  // Canadá tiene 10 dígitos (incluyendo el código de área)
+  '86': 11, // China tiene 11 dígitos (incluyendo el código de área)
+  '91': 10, // India tiene 10 dígitos (incluyendo el código de área)
+  '81': 10, // Japón tiene 10 dígitos (incluyendo el código de área)
+  '7': 10,  // Rusia tiene 10 dígitos (incluyendo el código de área)
+  '234': 10, // Nigeria tiene 10 dígitos (incluyendo el código de área)
+  '27': 9,  // Sudáfrica tiene 9 dígitos (incluyendo el código de área)
+  '20': 10, // Egipto tiene 10 dígitos (incluyendo el código de área)
+  '61': 9,  // Australia tiene 9 dígitos (incluyendo el código de área)
+  '64': 9,  // Nueva Zelanda tiene 9 dígitos (incluyendo el código de área)
+  '90': 10, // Turquía tiene 10 dígitos (incluyendo el código de área)
+  '82': 10, // Corea del Sur tiene 10 dígitos (incluyendo el código de área)
+  '62': 11  // Indonesia tiene 11 dígitos (incluyendo el código de área)
 };
 
 
@@ -37,9 +54,15 @@ export const validatePhone = (phone: string, countryCode: string): ValidationRes
   const allowedDigits = allowedDigitsByCountry[countryCode] || 0;
   const phoneDigits = phone.replace(/\D/g, ''); // Elimina los caracteres no numéricos
 
-  if (phoneDigits.length !== allowedDigits) {
-    const remainingDigits = allowedDigits - phoneDigits.length;
-    const errorMessage = `Faltan ${remainingDigits} dígitos en el número de teléfono.`;
+  const enteredDigits = phoneDigits.length;
+  const extraDigits = enteredDigits - allowedDigits;
+
+  if (extraDigits > 0) {
+    const errorMessage = `El número de teléfono tiene ${extraDigits} dígitos adicionales para el código de área ${countryCode}.`;
+    return { error: errorMessage, allowedDigits };
+  } else if (enteredDigits < allowedDigits) {
+    const remainingDigits = allowedDigits - enteredDigits;
+    const errorMessage = `Faltan ${remainingDigits} dígitos en el número de teléfono`;
     return { error: errorMessage, allowedDigits };
   }
 
