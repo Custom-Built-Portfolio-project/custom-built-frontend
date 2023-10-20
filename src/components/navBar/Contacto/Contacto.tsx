@@ -18,7 +18,7 @@ const Contacto: React.FC = () => {
 
   const [formData, setFormData] = useState<Form>({
     username: '',
-    phoneCode: '',
+    phoneCode: '52',
     phone: '',
     email: '',
     message: '',
