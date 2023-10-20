@@ -41,6 +41,11 @@ export const allowedDigitsByCountry: CountryDigitsMap = {
 
 
 export const validateName = (name: string): string | undefined => {
+
+  if (name.trim() === '') {
+    return 'El nombre no puede estar en blanco.';
+  }
+
   const nameRegex = /^[A-Z][a-zA-Z0-9]*$/;
   if (!name.match(nameRegex)) {
     return 'El nombre debe comenzar con mayuscula, letras y números.';
@@ -51,6 +56,10 @@ export const validateName = (name: string): string | undefined => {
 };
 
 export const validatePhone = (phone: string, countryCode: string): ValidationResult => {
+  if (phone.trim() === '') {
+    return { error: 'El número de teléfono no puede estar en blanco.', allowedDigits: 0 };
+  }
+
   const allowedDigits = allowedDigitsByCountry[countryCode] || 0;
   const phoneDigits = phone.replace(/\D/g, ''); // Elimina los caracteres no numéricos
 
@@ -70,6 +79,10 @@ export const validatePhone = (phone: string, countryCode: string): ValidationRes
 };
 
 export const validateEmail = (email: string): string | undefined => {
+  if (email.trim() === '') {
+    return 'La dirección de correo electrónico no puede estar en blanco.';
+  }
+  
   // Expresión regular para validar una dirección de correo electrónico
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
