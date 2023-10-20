@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import '../navBar/navBar.css';
 
 import DropdownMenu from './dropDownMenu/dropDownMenu'; // Asegúrate de que la ruta del import sea correcta
-
+import SearchNavBar from './SearchNavBar/SearchNavBar';
 
 interface NavBarProps {
     title: string;
@@ -46,6 +46,7 @@ const NavBar: React.FC<NavBarProps> = ({ title, items }) => {
                 />
 
             </div>
+            <div><SearchNavBar/></div>
             <Link to='/'>{title}</Link>
             <ul className='navBar-menu'>
                 {items.map((item, index) => (
