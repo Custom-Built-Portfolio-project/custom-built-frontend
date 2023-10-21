@@ -1,7 +1,7 @@
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
 import NavBar from './components/navBar/navBar'
-import Contacto from './components/navBar/Contacto/Contacto'
+import Contacto from './components/Contacto/Contacto'
 import Landing from './components/Landing/landing'
 
 function App() {

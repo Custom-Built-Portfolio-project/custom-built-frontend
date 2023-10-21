@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../navBar/navBar.css';
 
-import DropdownMenu from './dropDownMenu/dropDownMenu'; // Asegúrate de que la ruta del import sea correcta
+import DropdownMenu from './dropDownMenu/dropDownMenu'; 
 import SearchNavBar from './SearchNavBar/SearchNavBar';
 
 interface NavBarProps {
@@ -33,8 +33,14 @@ const NavBar: React.FC<NavBarProps> = ({ title, items }) => {
                                     { text: 'Componente 1', path: '/componente-1' },
                                     { text: 'Componente 2', path: '/componente-2' } ]
                                 },
-                                { text: 'Sistemas informáticos', path: '/sistemas' },
-                                { text: 'Periféricos de PC', path: '/perifericos' },
+                                { text: 'Sistemas informáticos', path: '/sistemas',  submenu: [ 
+                                    { text: 'Componente 4 ', path: '/componente-1' },
+                                    { text: 'Componente 5', path: '/componente-2' } ] 
+                                },
+                                { text: 'Periféricos de PC', path: '/perifericos',  submenu: [ 
+                                    { text: 'Componente 6', path: '/componente-1' },
+                                    { text: 'Componente 7', path: '/componente-2' } ]
+                                 },
                                 { text: 'Servidores y Redes', path: '/redes' },
                                 { text: 'Soluciones de Oficina', path: '/oficina' },
                                 { text: 'Juegos de PC y Realidad Virtual', path: '/juegos-virtual' },
