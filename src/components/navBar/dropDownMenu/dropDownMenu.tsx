@@ -82,7 +82,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ groups }) => {
                   <ul>
                     {group.items.map((item, index) => (
                       <li key={index}
-                        onMouseEnter={() => {toggleCategoriaSubMenu(); toggleMenuCategoriesSubMenu(index); seteoDePosicionEnGroup(index) }} >   {/*aca es cuando estoy parado en el item se cambia el estado setcategoriaIsopen  a true  * */}
+                        onMouseEnter={() => {toggleCategoriaSubMenu(); toggleMenuCategoriesSubMenu(index); seteoDePosicionEnGroup(index)  }} >   {/*aca es cuando estoy parado en el item se cambia el estado setcategoriaIsopen  a true  * */}
                         <Link to={item.path}>
                           {item.text}
                         </Link>
