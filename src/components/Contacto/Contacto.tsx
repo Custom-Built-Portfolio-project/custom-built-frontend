@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './Contacto.css'
 import {
   validateName,
   validatePhone,
@@ -32,8 +33,24 @@ const Contacto: React.FC = () => {
 
     const { name, value } = event.target;
     let error: string | undefined;
-
-    if (name === 'phoneCode') {
+    if (name === 'username') {
+       // Eliminar espacios extra entre palabras y al principio y al final
+    const normalizedValue = value.trim().replace(/\s+/g, ' ');
+  
+      // Validar el nombre después de eliminar espacios extras
+      error = validateName(normalizedValue);
+  
+      // Actualizar el estado con el valor normalizado y manejar el error
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: normalizedValue,
+      }));
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        [name]: error || '', // Si error es undefined, establece una cadena vacía
+      }));
+    } 
+    else if (name === 'phoneCode') {
       // Manejar cambios en el código de área
       setFormData(prevState => ({
         ...prevState,
@@ -113,29 +130,24 @@ const Contacto: React.FC = () => {
 
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>
-          Nombre:
-          <input
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleInputChange}
-
-          />
-        </label>
+    <div className="container">
+  <h2>Contactanos</h2>
+  <form onSubmit={handleSubmit}>
+    <div className="form-row">
+      <div className="column">
+        <label htmlFor="username">Nombre:</label>
+        <input type="text" id="username" name="username" value={formData.username} onChange={handleInputChange} />
       </div>
-      <div>
-        <label htmlFor="codigoArea">
-          Código de Área:
-          <select
-            id="codigoArea"
-            name="phoneCode"  // Corregido: el nombre del campo debe ser phoneCode, no phone
-            value={formData.phoneCode}  // Corregido: value debe ser formData.phoneCode en lugar de formData.phone
-            onChange={handleInputChange}  // Agrega el evento onChange para manejar cambios en el código de área
-          >
-            <option value="52">+52 (México)</option>
+      <div className="column">
+        <label htmlFor="email">Email:</label>
+        <input type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} />
+      </div>
+    </div>
+    <div className="form-row">
+      <div className="column">
+        <label htmlFor="phoneCode">Código de Área:</label>
+        <select id="phoneCode" name="phoneCode" value={formData.phoneCode} onChange={handleInputChange}>
+        <option value="52">+52 (México)</option>
             <option value="54">+54 (Argentina)</option>
             <option value="55">+55 (Brasil)</option>
             <option value="56">+56 (Chile)</option>
@@ -161,54 +173,28 @@ const Contacto: React.FC = () => {
             <option value="90">+90 (Turquía)</option>
             <option value="82">+82 (Corea del Sur)</option>
             <option value="62">+62 (Indonesia)</option>
-          </select>
-        </label>
+        </select>
       </div>
-      <div>
-        <label htmlFor="numeroTelefono">
-          Teléfono:
-          <input
-            type="tel"
-            name="phone"
-            value={formData.phone}
-            onChange={handleInputChange}
-
-          />
-        </label>
+      <div className="column">
+        <label htmlFor="phone">Teléfono:</label>
+        <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleInputChange} />
       </div>
-      <div>
-        <label>
-          Email:
-          <input
-            type="tel"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-
-          />
-        </label>
+    </div>
+    <div className="form-row">
+      <div className="column">
+        <label htmlFor="message">Mensaje:</label>
+        <textarea id="message" name="message" value={formData.message} onChange={handleInputChange}></textarea>
       </div>
-      <div>
-        <label>
-          Mensaje:
-          <textarea
-            name="message"
-            value={formData.message}
-            onChange={handleInputChange}
-
-          />
-        </label>
-      </div>
-
-      {Object.keys(errors).map((key, index) => {
-        if (errors[key]) {
-          return <p key={index}>{errors[key]}</p>;
-        }
-        return null;
-      })}
-
-      <button type="submit">Enviar</button>
-    </form>
+    </div>
+    {Object.keys(errors).map((key, index) => {
+      if (errors[key]) {
+        return <p key={index}>{errors[key]}</p>;
+      }
+      return null;
+    })}
+    <button type="submit">Enviar</button>
+  </form>
+</div>
 
   );
 }

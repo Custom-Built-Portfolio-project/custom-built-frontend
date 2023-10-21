@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 interface CategorySubMenuProps {
-  submenu: /*DropdownSubMenuItem[]*/  any //| undefined;
+  submenu: /*DropdownSubMenuItem[]*/  any //.| undefined;
   openMenuCategoriesSubMenuIndex: number | null;
 }
 

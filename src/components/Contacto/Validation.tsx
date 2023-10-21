@@ -41,19 +41,31 @@ export const allowedDigitsByCountry: CountryDigitsMap = {
 
 
 export const validateName = (name: string): string | undefined => {
-
-  if (name.trim() === '') {
+  // Verificar si el nombre no está en blanco después de eliminar espacios
+  const trimmedName = name.trim();
+  if (trimmedName === '') {
     return 'El nombre no puede estar en blanco.';
   }
 
-  const nameRegex = /^[A-Z][a-zA-Z0-9]*$/;
-  if (!name.match(nameRegex)) {
-    return 'El nombre debe comenzar con mayuscula, letras y números.';
-  } else if (name.length > 50) {
-    return 'El mensaje debe tener al menos 20 caracteres.';
+  // Validar que el nombre comience con mayúscula y contenga letras y espacios
+  const nameFormatRegex = /^[A-Z][a-zA-Z ]*$/;
+  if (!nameFormatRegex.test(trimmedName)) {
+    return 'El nombre debe comenzar con mayúscula y contener solo letras.';
   }
+
+  // Validar longitud máxima del nombre
+  if (trimmedName.length > 50) {
+    return 'El nombre no puede tener más de 50 caracteres.';
+  }
+
+  // Si pasa todas las validaciones, retornar undefined (sin errores)
   return undefined;
 };
+
+
+
+
+
 
 export const validatePhone = (phone: string, countryCode: string): ValidationResult => {
   if (phone.trim() === '') {
@@ -61,22 +73,21 @@ export const validatePhone = (phone: string, countryCode: string): ValidationRes
   }
 
   const allowedDigits = allowedDigitsByCountry[countryCode] || 0;
-  const phoneDigits = phone.replace(/\D/g, ''); // Elimina los caracteres no numéricos
+  const phoneDigits = phone.replace(/\D/g, '');
 
-  const enteredDigits = phoneDigits.length;
-  const extraDigits = enteredDigits - allowedDigits;
+  const phoneWithoutAreaCode = phoneDigits.slice(countryCode.length); // Elimina el código de área del número
 
-  if (extraDigits > 0) {
-    const errorMessage = `El número de teléfono tiene ${extraDigits} dígitos adicionales para el código de área ${countryCode}.`;
-    return { error: errorMessage, allowedDigits };
-  } else if (enteredDigits < allowedDigits) {
-    const remainingDigits = allowedDigits - enteredDigits;
-    const errorMessage = `Faltan ${remainingDigits} dígitos en el número de teléfono`;
+  if (phoneWithoutAreaCode.length !== allowedDigits) {
+    const errorMessage = `El número de teléfono debe tener exactamente ${allowedDigits} dígitos con el código de área ${countryCode}.`;
     return { error: errorMessage, allowedDigits };
   }
 
   return { error: undefined, allowedDigits };
 };
+
+
+  
+
 
 export const validateEmail = (email: string): string | undefined => {
   if (email.trim() === '') {
